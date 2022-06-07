@@ -1,0 +1,4 @@
+- transfer coins into the token farm smart contract
+- Stake tokens (deposit)
+- Unstake tokens (withdraw)
+- Issuing tokens (earning interest)
