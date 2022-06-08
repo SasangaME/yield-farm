@@ -12,6 +12,7 @@ contract TokenFarm {
     address[] public stakers;
     mapping(address => uint256) public stakingBalance;
     mapping(address => bool) public hasStaked;
+    mapping(address => bool) public isStaking;
 
     constructor(DappToken _dappToken, DaiToken _daiToken) {
         dappToken = _dappToken;
@@ -26,6 +27,17 @@ contract TokenFarm {
             stakers.push(msg.sender);
         }
 
+        isStaking[msg.sender] = true;
         hasStaked[msg.sender] = true;
+    }
+
+    function issueToken() public {
+        for (uint256 i = 0; i < stakers.length; i++) {
+            address recipient = stakers[i];
+            uint256 balance = stakingBalance[recipient];
+            if (balance > 0) {
+                dappToken.transfer(recipient, balance);
+            }
+        }
     }
 }
